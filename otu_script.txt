@@ -1,0 +1,10 @@
+vsearch --cluster_fast asvs.fasta \
+        --id 0.97 \
+        --centroids otus.fasta \
+        --uc clusters.uc
+
+
+seqkit grep -v -f asvs_2_filter.txt asvs.fasta -o asvs_filtered.fasta
+
+awk '$1 == "H" {print $9 "\t" $10}' clusters.uc > asv_to_otu_map.tsv
+sed -i '1i ASV_ID\tOTU_ID' asv_to_otu_map.tsv

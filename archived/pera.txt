@@ -1,0 +1,29 @@
+library(tidyverse)
+library(DT)
+library(data.table)
+library(ExperimentHub)
+library(curatedMetagenomicData)
+library(SummarizedExperiment)
+hub <- ExperimentHub(cache = "/hpc/group/venturellilab/ac931/.cache/ExperimentHub")
+
+
+data <- curatedMetagenomicData("AsnicarF_2021.gene_families", dryrun = FALSE, rownames = "short") |>
+	mergeData() |>
+	assay() |>
+	as.data.frame()
+
+
+data2 <- sampleMetadata |>
+	filter(study_name == "YeZ_2018") |>
+    filter(age >= 18) |>
+    filter(!is.na(alcohol)) |>
+    filter(body_site == "stool") |>
+    select(where(~ !all(is.na(.x)))) |>
+    returnSamples("gene_families")
+
+    data2 <- sampleMetadata |>
+	filter(study_name == "YeZ_2018") |>
+    filter(body_site == "stool") |>
+    returnSamples("gene_families")
+
+df <- as.data.frame(assay(data2))

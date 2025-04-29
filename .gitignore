@@ -172,3 +172,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Ignore data and picrust2-2.6.2 directories
+data/
+picrust2-2.6.2/
